@@ -2,7 +2,7 @@
 ///
 /// Usage: `#show: align-list-marker-with-baseline`
 #let align-list-marker-with-baseline(body) = {
-  show list.item: it => {
+  show list.item: it => context {
     let current-marker = {
       set text(fill: text.fill)
       if type(list.marker) == array {
@@ -11,18 +11,14 @@
         list.marker
       }
     }
-    let current-indent = context measure(current-marker).width
-    let hanging-indent = current-indent.location() + .6em + .3pt
+    let hanging-indent = measure(current-marker).width + .6em + .3pt
     set terms(hanging-indent: hanging-indent)
     if type(list.marker) == array {
-      terms.item(
-        current-marker,
-        {
-          // set the value of list.marker in a loop
-          set list(marker: list.marker.slice(1) + (list.marker.at(0),))
-          it.body
-        },
-      )
+      terms.item(current-marker, {
+        // set the value of list.marker in a loop
+        set list(marker: list.marker.slice(1) + (list.marker.at(0),))
+        it.body
+      })
     } else {
       terms.item(current-marker, it.body)
     }
@@ -34,7 +30,7 @@
 ///
 /// Usage: `#show: align-enum-marker-with-baseline`
 #let align-enum-marker-with-baseline(body) = {
-  show enum.item: it => {
+  show enum.item: it => context {
     if not it.has("number") or it.number == none or enum.full == true {
       // If the enum item does not have a number, or the number is none, or the enum is full
       return it
@@ -51,22 +47,32 @@
       black: 900,
     )
     let current-marker = {
-      set text(
-        fill: text.fill,
-        weight: if type(text.weight) == int {
-          text.weight - 300
-        } else {
-          weight-map.at(text.weight) - 300
-        },
-      )
-      numbering(enum.numbering, it.number) + h(0.4em)
+      set text(fill: text.fill, weight: if type(text.weight) == int {
+        text.weight - 300
+      } else {
+        weight-map.at(text.weight) - 300
+      })
+      numbering(enum.numbering, it.number) + h(-.1em)
     }
-    let current-indent = context measure(current-marker).width
-    let hanging-indent = current-indent.location() + 1.75em
+    let hanging-indent = measure(current-marker).width + .6em + .3pt
     set terms(hanging-indent: hanging-indent)
     terms.item(current-marker, it.body)
   }
   body
 }
 
-#let checkbox = box(grid(gutter: -8pt, $square$, $checkmark$))
+#let checkbox = box(grid(
+  gutter: -8pt,
+  $square$,
+  $checkmark$,
+))
+
+#let checkcircle = box(grid(
+  gutter: -8pt,
+  $circle$,
+  $checkmark$,
+))
+
+#let distr(s, w: auto) = {
+  block(width: w, stack(dir: ltr, ..s.clusters().map(x => [#x]).intersperse(1fr)))
+}
