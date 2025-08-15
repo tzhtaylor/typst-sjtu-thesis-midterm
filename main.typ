@@ -2,7 +2,7 @@
 #import "utils.typ": *
 #import "@preview/cuti:0.3.0": show-cn-fakebold
 #import "@preview/numbly:0.1.0": numbly
-#import "@preview/kouhu:0.2.0": kouhu
+#import "@preview/itemize:0.1.2" as el
 
 #set heading(numbering: numbly(
   "{1}、",
@@ -15,18 +15,17 @@
   show h.where(amount: 0.3em): none
   it
 }
-#show heading: it => {
-  v(1em)
-  it
-  h(2em)
-}
+#show heading.where(level: 1): set block(above: 2.5em, below: 1.5em)
+#show heading.where(level: 2): set block(above: 2em, below: 1.5em)
+#show heading.where(level: 3): set block(above: 1.75em, below: 1.5em)
+#show heading.where(level: 4): set block(above: 1.5em, below: 1.5em)
 #show heading.where(level: 1): set text(font: ziti.fangsong, weight: "regular", size: zihao.xiaosi, top-edge: 3pt)
 #show heading.where(level: 2): set text(font: ziti.kaiti, size: zihao.xiaosi)
-#set page(margin: (x: 2.8cm, y: 2.5cm))
+#set page(margin: (x: 2.6cm, y: 2.5cm))
 #set text(hyphenate: false, font: ziti.songti)
 #set par(leading: 1em)
-#show: align-list-marker-with-baseline
-#show: align-enum-marker-with-baseline
+#show: el.default-enum-list
+#set enum(body-indent: 1em)
 #show: show-cn-fakebold
 #show bibliography: set par(hanging-indent: 0em)
 #show math.equation: set text(font: ziti.math)
@@ -95,19 +94,19 @@
 )
 
 #align(center, block(width: 85%)[#table(
-    align: left + horizon,
-    columns: (38%, 1fr),
-    row-gutter: 1em,
-    column-gutter: -2em,
-    [#info-key("学号", "Student ID")], [#info-value(info.student_id)],
-    [#info-key("姓名", "Name")], [#info-value(info.name)],
-    [#info-key("学生类别", "\nDegree Program")], [#info-value(info.degree)],
-    [#info-key("学习形式", "\nStudy Mode")], [#info-value(info.study_mode)],
-    [#info-key("导师", "Supervisor(s)")], [#info-value(info.supervisor)],
-    [#info-key("专业", "Major")], [#info-value(info.major)],
-    [#info-key("学院", "School")], [#info-value(info.school)],
-    [#info-key("考核日期", "Date")], [#info-value(info.date)],
-  )])
+  align: left + horizon,
+  columns: (38%, 1fr),
+  row-gutter: 1em,
+  column-gutter: -2em,
+  [#info-key("学号", "Student ID")], [#info-value(info.student_id)],
+  [#info-key("姓名", "Name")], [#info-value(info.name)],
+  [#info-key("学生类别", "\nDegree Program")], [#info-value(info.degree)],
+  [#info-key("学习形式", "\nStudy Mode")], [#info-value(info.study_mode)],
+  [#info-key("导师", "Supervisor(s)")], [#info-value(info.supervisor)],
+  [#info-key("专业", "Major")], [#info-value(info.major)],
+  [#info-key("学院", "School")], [#info-value(info.school)],
+  [#info-key("考核日期", "Date")], [#info-value(info.date)],
+)])
 
 #pagebreak()
 
@@ -218,24 +217,50 @@
 
 #set text(font: ziti.kaiti, size: zihao.xiaosi)
 #show heading: set par(leading: 1em)
-#set par(leading: 1em, first-line-indent: 3.5em, spacing: 1.25em, hanging-indent: 1.5em, justify: true)
-#set enum(indent: 1.5em)
-#set list(indent: 1.5em)
+#set par(
+  leading: 1.25em,
+  first-line-indent: (amount: 3.5em, all: true),
+  spacing: 1.25em,
+  hanging-indent: 1.5em,
+  justify: true,
+)
+#set enum(indent: 1.75em)
+#show enum: set par(hanging-indent: 0em)
+#set list(indent: 2.65em)
+#show list: set par(hanging-indent: 0em)
 
 = *报告正文 Report。*请阐述开题报告以来学位论文研究工作的进展情况及所取得的阶段性成果，并简述下一阶段研究计划，不少于4000汉字。Please summarize your research progress and achievements since your thesis proposal as well as your plan for next step. No less than 3200 words if written in English.
 
-#kouhu(builtin-text: "zhufu", length: 300)
+== 进展情况
+
+进展情况良好。
+
+== 阶段性成果
+
+取得了很多成果。
+
+== 下一阶段研究计划
+
+下一阶段计划很明确。
 
 = *成果清单 List of Achievements。*请列出开题报告以来或上次年度进展报告以来新发表的学术论文、授权专利、国际会议论文、专著等成果清单。作者、标题、杂志、卷、期、页码等信息请填写完整。Please provide a list of academic publications (papers, patents, international academic conference talks/presentations, monographs, etc.) since your thesis proposal. Information on author list, title, journal name, volume, number, and pages shall be complete.
 
-#kouhu(builtin-text: "simp", length: 100)
+#achievements(
+  (
+    "Chen H, Chan C T. Acoustic cloaking in three dimensions using acoustic metamaterials[J]. Applied Physics Letters, 2007, 91:183518.",
+    "Chen H, Wu B I, Zhang B, et al. Electromagnetic Wave Interactions with a Metamaterial Cloak[J]. Physical Review Letters, 2007, 99(6):63903.",
+  ),
+  (
+    "第一发明人, 永动机[P], 专利申请号202510149890.0.",
+  ),
+)
 
 #set text(font: ziti.fangsong, size: zihao.xiaosi, weight: "bold", top-edge: 3pt)
 #set par(leading: 1em, hanging-indent: 0em, first-line-indent: 2em)
 
 #v(5em)
 
-本人承诺：开题报告中的内容真实无误，若有不实，愿承担相应的责任和后果。I hereby declare and confirm that the details provided in this Form are valid and accurate. If anything untruthful found, I will bear the corresponding liabilities and consequences.
+本人承诺：报告中的内容真实无误，若有不实，愿承担相应的责任和后果。 I hereby declare and confirm that the details provided in this Form are valid and accurate. If anything untruthful found, I will bear the corresponding liabilities and consequences.
 
 #linebreak()
 
@@ -243,5 +268,12 @@
   columns: (60%, 1fr),
   stroke: none,
   inset: 0em,
-  [学生签字/Signature of Student：], [日期/Date：#mid-exam-date.display()],
+  [
+    #grid(
+      columns: (70%, 1fr),
+      [学生签字/Signature of Student：], place(dx: -20pt, dy: -22pt, image("figures/student-sign.png", height: 2.5em)),
+    )
+  ],
+  [日期/Date：#mid-exam-date.display()],
 )
+
