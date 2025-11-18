@@ -2,7 +2,7 @@
 #import "utils.typ": *
 #import "@preview/cuti:0.3.0": show-cn-fakebold
 #import "@preview/numbly:0.1.0": numbly
-#import "@preview/itemize:0.1.2" as el
+#import "@preview/itemize:0.2.0" as el
 
 #set heading(numbering: numbly(
   "{1}、",
@@ -22,7 +22,7 @@
 #show heading.where(level: 1): set text(font: ziti.fangsong, weight: "regular", size: zihao.xiaosi, top-edge: 3pt)
 #show heading.where(level: 2): set text(font: ziti.kaiti, size: zihao.xiaosi)
 #set page(margin: (x: 2.6cm, y: 2.5cm))
-#set text(hyphenate: false, font: ziti.songti)
+#set text(hyphenate: false, font: ziti.songti, lang: "zh")
 #set par(leading: 1em)
 #show: el.default-enum-list
 #set enum(body-indent: 1em)
